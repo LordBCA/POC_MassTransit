@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  poc_masstransit.api:
+    image: ${DOCKER_REGISTRY-}pocmasstransitapi
+    build:
+      context: .
+      dockerfile: POC_MassTransit.API/Dockerfile
