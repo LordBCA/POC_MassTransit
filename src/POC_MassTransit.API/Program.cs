@@ -1,7 +1,6 @@
 using POC_MassTransit.API;
 using POC_MassTransit.Application;
 using POC_MassTransit.Infrastructure;
-using POC_MassTransit.Infrastructure.Data.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

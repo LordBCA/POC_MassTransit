@@ -5,7 +5,7 @@ using POC_MassTransit.Application.Messaging.Events;
 using POC_MassTransit.Domain.Models;
 
 namespace POC_MassTransit.Application.Assigments.Commands.CreateAssigment;
-public class CreateAssigmentHandler(IApplicationDbContext dbContext, IMessageBrokerProducerService messageBrokerService)
+public class CreateAssigmentHandler(IApplicationDbContext dbContext, IMessageBrokerService messageBrokerService)
     : ICommandHandler<CreateAssigmentCommand, CreateAssigmentResult>
 {
     public async Task<CreateAssigmentResult> Handle(CreateAssigmentCommand command, CancellationToken cancellationToken)

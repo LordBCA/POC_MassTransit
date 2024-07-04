@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using POC_MassTransit.Application.Messaging.Abstractions;
 using System.Reflection;
 
 
@@ -41,7 +42,9 @@ public static class Extentions
                     config.UsingInMemory();
                     break;
             }            
-        });
+        });        
+
+        services.AddSingleton<IMessageBrokerService, MessageBrokerService>();
 
         return services;
     }

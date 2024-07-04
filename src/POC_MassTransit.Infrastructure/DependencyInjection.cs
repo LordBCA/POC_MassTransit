@@ -30,8 +30,30 @@ public static class DependencyInjection
 
         services.AddMessageBroker(configuration, applicationAssembly);
 
-        services.AddSingleton<IMessageBrokerProducerService, MessageBrokerProducerService>();
+        //services.AddSingleton<IMessageBrokerProducerService, MessageBrokerProducerService>();
+        //services.RegisterConsumers(applicationAssembly);
 
         return services;
+    }
+
+    private static void RegisterConsumers(this IServiceCollection services, params Assembly[] assemblies)
+    {
+        var serviceProvider = services.BuildServiceProvider();
+        var messageBrokerService = serviceProvider.GetRequiredService<IMessageBrokerService>();
+
+        var consumerTypes = assemblies.SelectMany(a => a.GetTypes())
+            .Where(t => !t.IsAbstract && t.GetInterfaces()
+                .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICustomConsumer<>)));
+
+        foreach (var consumerType in consumerTypes)
+        {
+            var messageType = consumerType.GetInterfaces()
+                .First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICustomConsumer<>))
+                .GetGenericArguments()[0];
+
+            var method = typeof(IMessageBrokerService).GetMethod("RegisterConsumer")
+                .MakeGenericMethod(consumerType, messageType);
+            method.Invoke(messageBrokerService, null);
+        }
     }
 }
