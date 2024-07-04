@@ -10,12 +10,12 @@ using System.Reflection;
 using POC_MassTransit.Application.Messaging.Abstractions;
 
 namespace POC_MassTransit.Infrastructure;
-public static class DependencyInjection
+public static class ConfigurationExtensions
 {
     public static IServiceCollection AddInfrastructureServices
         (this IServiceCollection services, IConfiguration configuration, Assembly applicationAssembly)
     {
-        var connectionString = configuration.GetConnectionString("Database");
+        var connectionString = configuration.GetConnectionString("Database");        
 
         // Add services to the container.
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();        

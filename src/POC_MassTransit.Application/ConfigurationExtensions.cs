@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace POC_MassTransit.Application;
-public static class DependencyInjection
+public static class ConfigurationExtensions
 {
     public static Assembly AddApplicationServices
         (this IServiceCollection services, IConfiguration configuration)

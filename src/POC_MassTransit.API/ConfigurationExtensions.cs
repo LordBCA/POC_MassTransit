@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace POC_MassTransit.API;
 
-public static class DependencyInjection
+public static class ConfigurationExtensions
 {
     public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
     {

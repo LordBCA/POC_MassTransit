@@ -1,4 +1,4 @@
-﻿namespace POC_MassTransit.Application.Dtos;
+﻿namespace POC_MassTransit.Application.Assigments.Common;
 
 public record AssigmentDto(
     Guid Id,

@@ -1,6 +1,6 @@
 ﻿
 using POC_MassTransit.Application.Common.CQRS;
-using POC_MassTransit.Application.Dtos;
+using POC_MassTransit.Application.Assigments.Common;
 
 namespace POC_MassTransit.Application.Assigments.Commands.CreateAssigment;
 
