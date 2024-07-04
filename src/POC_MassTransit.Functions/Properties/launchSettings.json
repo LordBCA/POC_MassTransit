@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "POC_MassTransit.Functions": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7128"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "httpPort": 32150,
+      "useSSL": false
+    }
+  }
+}

@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC_MassTransit.API", "POC_MassTransit.API\POC_MassTransit.API.csproj", "{DB7A0CA9-93FC-4A9E-9FD5-820FF39926FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POC_MassTransit.API", "POC_MassTransit.API\POC_MassTransit.API.csproj", "{DB7A0CA9-93FC-4A9E-9FD5-820FF39926FD}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{686B20F6-8C8E-4460-9B1B-CAE4817B5CC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC_MassTransit.Domain", "POC_MassTransit.Domain\POC_MassTransit.Domain.csproj", "{3ECE5F3E-7A66-4C0A-8739-63FD33E37C23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POC_MassTransit.Domain", "POC_MassTransit.Domain\POC_MassTransit.Domain.csproj", "{3ECE5F3E-7A66-4C0A-8739-63FD33E37C23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC_MassTransit.Application", "POC_MassTransit.Application\POC_MassTransit.Application.csproj", "{2EE99352-9664-4912-A65A-B1780B89A2DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POC_MassTransit.Application", "POC_MassTransit.Application\POC_MassTransit.Application.csproj", "{2EE99352-9664-4912-A65A-B1780B89A2DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC_MassTransit.Infrastructure", "POC_MassTransit.Infrastructure\POC_MassTransit.Infrastructure.csproj", "{07369C9D-9BA4-4419-A3A4-3B9E11654ADA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POC_MassTransit.Infrastructure", "POC_MassTransit.Infrastructure\POC_MassTransit.Infrastructure.csproj", "{07369C9D-9BA4-4419-A3A4-3B9E11654ADA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC_MassTransit.Functions", "POC_MassTransit.Functions\POC_MassTransit.Functions.csproj", "{214CA7DD-F4EC-4A30-B2F2-D40ADDCC3439}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{07369C9D-9BA4-4419-A3A4-3B9E11654ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07369C9D-9BA4-4419-A3A4-3B9E11654ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07369C9D-9BA4-4419-A3A4-3B9E11654ADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{214CA7DD-F4EC-4A30-B2F2-D40ADDCC3439}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{214CA7DD-F4EC-4A30-B2F2-D40ADDCC3439}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{214CA7DD-F4EC-4A30-B2F2-D40ADDCC3439}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{214CA7DD-F4EC-4A30-B2F2-D40ADDCC3439}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
