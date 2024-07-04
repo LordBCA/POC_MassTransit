@@ -17,15 +17,30 @@ public static class Extentions
             if (assembly != null)
                 config.AddConsumers(assembly);
 
-            config.UsingRabbitMq((context, configurator) =>
+            switch (configuration["MessageBroker:Service"])
             {
-                configurator.Host(new Uri(configuration["MessageBroker:Host"]!), host =>
-                {
-                    host.Username(configuration["MessageBroker:UserName"]);
-                    host.Password(configuration["MessageBroker:Password"]);
-                });
-                configurator.ConfigureEndpoints(context);
-            });
+                case "AzureServiceBus":
+                    config.UsingAzureServiceBus((context, configurator) =>
+                    {
+                        configurator.Host("MessageBroker:ConnectionString");
+                        configurator.ConfigureEndpoints(context);
+                    });
+                    break;
+                case "RabbitMQ":
+                    config.UsingRabbitMq((context, configurator) =>
+                    {
+                        configurator.Host(new Uri(configuration["MessageBroker:Host"]!), host =>
+                        {
+                            host.Username(configuration["MessageBroker:UserName"]);
+                            host.Password(configuration["MessageBroker:Password"]);
+                        });
+                        configurator.ConfigureEndpoints(context);
+                    });
+                    break;
+                default:
+                    config.UsingInMemory();
+                    break;
+            }            
         });
 
         return services;

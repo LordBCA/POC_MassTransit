@@ -7,6 +7,7 @@ using POC_MassTransit.Infrastructure.Data;
 using POC_MassTransit.Infrastructure.Data.Interceptors;
 using POC_MassTransit.Infrastructure.Messaging;
 using System.Reflection;
+using POC_MassTransit.Application.Messaging.Abstractions;
 
 namespace POC_MassTransit.Infrastructure;
 public static class DependencyInjection
@@ -28,6 +29,8 @@ public static class DependencyInjection
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
         services.AddMessageBroker(configuration, applicationAssembly);
+
+        services.AddSingleton<IMessageBrokerProducerService, MessageBrokerProducerService>();
 
         return services;
     }
