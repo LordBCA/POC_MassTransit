@@ -1,6 +1,17 @@
 version: '3.4'
 
 services:
+  messagebroker:
+    container_name: messagebroker
+    hostname: ecommerce-mq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
   poc_masstransit.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

@@ -1,6 +1,9 @@
 version: '3.4'
 
 services:
+  messagebroker:
+    image: rabbitmq:management
+
   poc_masstransit.api:
     image: ${DOCKER_REGISTRY-}pocmasstransitapi
     build:
