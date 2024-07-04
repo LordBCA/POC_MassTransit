@@ -6,9 +6,11 @@ using POC_MassTransit.Infrastructure.Data.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var applicationAssembly = builder.Services
+    .AddApplicationServices(builder.Configuration);
+
 builder.Services
-    .AddApplicationServices(builder.Configuration)
-    .AddInfrastructureServices(builder.Configuration)
+    .AddInfrastructureServices(builder.Configuration, applicationAssembly)
     .AddApiServices(builder.Configuration);
 
 var app = builder.Build();

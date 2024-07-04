@@ -12,7 +12,7 @@ namespace POC_MassTransit.Infrastructure;
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureServices
-        (this IServiceCollection services, IConfiguration configuration)
+        (this IServiceCollection services, IConfiguration configuration, Assembly applicationAssembly)
     {
         var connectionString = configuration.GetConnectionString("Database");
 
@@ -27,7 +27,7 @@ public static class DependencyInjection
 
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
-        services.AddMessageBroker(configuration, Assembly.GetExecutingAssembly());
+        services.AddMessageBroker(configuration, applicationAssembly);
 
         return services;
     }

@@ -5,7 +5,7 @@ using System.Reflection;
 namespace POC_MassTransit.Application;
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplicationServices
+    public static Assembly AddApplicationServices
         (this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMediatR(config =>
@@ -15,6 +15,6 @@ public static class DependencyInjection
         
         //services.AddMessageBroker(configuration, Assembly.GetExecutingAssembly());
 
-        return services;
+        return Assembly.GetExecutingAssembly();
     }
 }
