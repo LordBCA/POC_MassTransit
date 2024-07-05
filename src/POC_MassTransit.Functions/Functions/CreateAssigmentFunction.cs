@@ -9,19 +9,13 @@ using MediatR;
 
 namespace POC_MassTransit.Functions.Functions
 {
-    public class CreateAssigmentFunction
+    public class CreateAssigmentFunction(ILoggerFactory loggerFactory, ISender sender)
     {
-        private readonly ILogger _logger;
-        private readonly ISender _sender;
+        private readonly ILogger _logger = loggerFactory.CreateLogger<CreateAssigmentFunction>();
+        private readonly ISender _sender = sender;
         private readonly JsonSerializerOptions _jsonSerializerOptions = new() { PropertyNameCaseInsensitive = true };
         public record CreateAssigmentRequest(AssigmentDto Assigment);
         public record CreateAssigmentResponse(Guid Id);
-
-        public CreateAssigmentFunction(ILoggerFactory loggerFactory, ISender sender)
-        {
-            _logger = loggerFactory.CreateLogger<CreateAssigmentFunction>();
-            _sender = sender;
-        }
 
         [Function("CreateAssigmentFunction")]
         public async Task<HttpResponseData> RunAsync([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestData req)
@@ -29,36 +23,39 @@ namespace POC_MassTransit.Functions.Functions
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
             // Read request body
-            //string requestBody = await req.ReadAsStringAsync();
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             if (string.IsNullOrEmpty(requestBody))
             {
-                _logger.LogError("the payload was empty");
-                var response = req.CreateResponse(HttpStatusCode.BadRequest);
-                response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
-                response.WriteString("Invalid request body format.");
-                return response;
+                return await WriteErrorAsync(req, HttpStatusCode.BadRequest, "Invalid request body format.");
             }
 
             var assignmentRequest = JsonSerializer.Deserialize<CreateAssigmentRequest>(requestBody, _jsonSerializerOptions);
 
             if (assignmentRequest?.Assigment == null)
             {
-                var response = req.CreateResponse(HttpStatusCode.BadRequest);
-                response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
-                response.WriteString("Invalid request body format.");
-                return response;
+                return await WriteErrorAsync(req, HttpStatusCode.BadRequest, "Invalid request body format.");
             }            
 
             var result = await _sender.Send(new CreateAssigmentCommand(assignmentRequest.Assigment));
             
-            var responseCommand = JsonSerializer.Serialize(result);
-
-            var responseMessage = req.CreateResponse(HttpStatusCode.OK);
-            responseMessage.Headers.Add("Content-Type", "text/plain; charset=utf-8");
-            responseMessage.WriteStringAsync(responseCommand);
-
-            return responseMessage;
+            return await WriteSuccessAsync(req, result);
         }
+
+        private async Task<HttpResponseData> WriteErrorAsync(HttpRequestData request, HttpStatusCode httpStatusCode, string message)
+        {
+            var response = request.CreateResponse(httpStatusCode);
+            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+            await response.WriteStringAsync(message);
+            return response;
+        }   
+
+        private async Task<HttpResponseData> WriteSuccessAsync(HttpRequestData request, CreateAssigmentResult result)
+        {
+            var response = request.CreateResponse(HttpStatusCode.OK);
+            var responseCommand = JsonSerializer.Serialize(new CreateAssigmentResponse(result.Id));
+            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+            await response.WriteStringAsync(responseCommand);
+            return response;
+        }  
     }
 }

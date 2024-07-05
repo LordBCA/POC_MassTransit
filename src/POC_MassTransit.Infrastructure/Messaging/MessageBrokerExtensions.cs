@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using POC_MassTransit.Application.Messaging.Abstractions;
+using POC_MassTransit.Infrastructure.Messaging.Configurations;
 using System.Reflection;
 
 
@@ -13,37 +14,19 @@ public static class MessageBrokerExtensions
     {        
         var messageBrokerOptions = configuration.GetSection("MessageBroker").Get<MessageBrokerOptions>();
 
+        services.AddSingleton<MessageBrokerConfiguratorFactory>();
+
         services.AddMassTransit(config =>
         {
             config.SetKebabCaseEndpointNameFormatter();
 
-            if (assembly != null)
-                config.AddConsumers(assembly);            
+            config.AddConsumers(assembly);            
 
-            switch (messageBrokerOptions.Service)
-            {
-                case "AzureServiceBus":
-                    config.UsingAzureServiceBus((context, configurator) =>
-                    {
-                        configurator.Host(messageBrokerOptions.ConnectionString);
-                        configurator.ConfigureEndpoints(context);
-                    });
-                    break;
-                case "RabbitMQ":
-                    config.UsingRabbitMq((context, configurator) =>
-                    {
-                        configurator.Host(new Uri(messageBrokerOptions.Host!), host =>
-                        {
-                            host.Username(messageBrokerOptions.UserName);
-                            host.Password(messageBrokerOptions.Password);
-                        });
-                        configurator.ConfigureEndpoints(context);
-                    });
-                    break;
-                default:
-                    config.UsingInMemory();
-                    break;
-            }            
+            var provider = services.BuildServiceProvider();
+            var factory = provider.GetRequiredService<MessageBrokerConfiguratorFactory>();
+            var configurator = factory.Create();
+            configurator.Configure(config);
+               
         });        
 
         services.AddSingleton<IMessageBrokerService, MessageBrokerService>();
