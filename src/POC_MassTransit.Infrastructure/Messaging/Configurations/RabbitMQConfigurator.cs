@@ -2,9 +2,9 @@ using MassTransit;
 
 namespace POC_MassTransit.Infrastructure.Messaging.Configurations;
 
-public class RabbitMQConfigurator(MessageBrokerOptions messageBrokerOptions) : IMessageBrokerConfigurator
+public class RabbitMQConfigurator(IBusRegistrationConfigurator config, MessageBrokerOptions messageBrokerOptions) : IMessageBrokerConfigurator
 {
-    public void Configure(IBusRegistrationConfigurator config)
+    public void Configure()
     {
         config.UsingRabbitMq((context, configurator) =>
                     {

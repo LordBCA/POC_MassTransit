@@ -20,30 +20,7 @@ public static class MessageBrokerExtensions
 
             config.AddConsumers(assembly);
 
-            switch (messageBrokerOptions.Service)
-            {
-                case "AzureServiceBus":
-                    config.UsingAzureServiceBus((context, configurator) =>
-                    {
-                        configurator.Host(messageBrokerOptions.ConnectionString);
-                        configurator.ConfigureEndpoints(context);
-                    });
-                    break;
-                case "RabbitMQ":
-                    config.UsingRabbitMq((context, configurator) =>
-                    {
-                        configurator.Host(new Uri(messageBrokerOptions.Host!), host =>
-                        {
-                            host.Username(messageBrokerOptions.UserName);
-                            host.Password(messageBrokerOptions.Password);
-                        });
-                        configurator.ConfigureEndpoints(context);
-                    });
-                    break;
-                default:
-                    config.UsingInMemory();
-                    break;
-            }
+            MessageBrokerConfiguratorFactory.Create(config, messageBrokerOptions).Configure();            
         });
 
         services.AddSingleton<IMessageBrokerService, MessageBrokerService>();

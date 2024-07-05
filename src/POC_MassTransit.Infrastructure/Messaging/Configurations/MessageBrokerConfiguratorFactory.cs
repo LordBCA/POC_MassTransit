@@ -1,17 +1,16 @@
 using MassTransit;
-using Microsoft.Extensions.Options;
 
 namespace POC_MassTransit.Infrastructure.Messaging.Configurations;
 
-public class MessageBrokerConfiguratorFactory(IOptions<MessageBrokerOptions> options)
+public static class MessageBrokerConfiguratorFactory
 {
-    public IMessageBrokerConfigurator Create()
+    public static IMessageBrokerConfigurator Create(IBusRegistrationConfigurator config, MessageBrokerOptions messageBrokerOptions)
     {
-        return options.Value.Service switch
+        return messageBrokerOptions.Service switch
         {
-            "AzureServiceBus" => new AzureServiceBusConfigurator(options.Value),
-            "RabbitMQ" => new RabbitMQConfigurator(options.Value),
-            _ => new InMemoryConfigurator()
+            "AzureServiceBus" => new AzureServiceBusConfigurator(config, messageBrokerOptions),
+            "RabbitMQ" => new RabbitMQConfigurator(config, messageBrokerOptions),
+            _ => new InMemoryConfigurator(config)
         };
     }
 }

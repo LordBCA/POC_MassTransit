@@ -2,9 +2,9 @@ using MassTransit;
 
 namespace POC_MassTransit.Infrastructure.Messaging.Configurations;
 
-public class AzureServiceBusConfigurator(MessageBrokerOptions messageBrokerOptions) : IMessageBrokerConfigurator
+public class AzureServiceBusConfigurator(IBusRegistrationConfigurator config, MessageBrokerOptions messageBrokerOptions) : IMessageBrokerConfigurator
 {
-    public void Configure(IBusRegistrationConfigurator config)
+    public void Configure()
     {
         config.UsingAzureServiceBus((context, configurator) =>
                     {
