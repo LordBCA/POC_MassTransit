@@ -1,4 +1,5 @@
-﻿﻿using Microsoft.EntityFrameworkCore;
+﻿using MassTransit;
+using Microsoft.EntityFrameworkCore;
 using POC_MassTransit.Application.Data;
 using POC_MassTransit.Domain.Models;
 using System.Reflection;
@@ -17,5 +18,9 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         base.OnModelCreating(builder);
+
+        builder.AddInboxStateEntity();
+        builder.AddOutboxMessageEntity();
+        builder.AddOutboxStateEntity();
     }
 }
