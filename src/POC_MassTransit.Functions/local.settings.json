@@ -1,0 +1,13 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "ConnectionStrings:Database": "Server=localhost;Database=RoarDb;User Id=sa;Password=admin123;Encrypt=False;TrustServerCertificate=True",
+    "MessageBroker:Host": "amqp://localhost:5672",
+    "MessageBroker:ConnectionString": "",
+    "MessageBroker:UserName": "guest",
+    "MessageBroker:Password": "guest",
+    "MessageBroker:Service": "RabbitMQ"
+  }
+}
